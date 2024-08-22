@@ -1,47 +1,45 @@
-# Cell 1: Setup
 import streamlit as st
-from openai import OpenAI
-import os
+import pandas as pd
+import matplotlib.pyplot as plt
 
-# Load the images
-hourly_wage_trends = st.image("Task1.png")
-comparison_of_weekly_wages = st.image("Task2.png")
-top_5_occupations = st.image("Task3.1.png")
-top3 = st.image("Task3.2.png")
-bottom3 = st.image("Task3.3.png")
+# Streamlit title and description
+st.title("Hourly Wage Trends in Canada Over Time by Occupation")
+st.write("""
+This visualization compares the overall hourly wage trend of all occupations with those of engineering and health professionals in Canada.
+""")
 
-#AI responses
-response_message_Task1 = """In analyzing Canadian wage data, several key aspects emerge. Firstly, when examining overall wage trends over time, it is evident that there has been a gradual increase in wages, albeit with fluctuations influenced by economic
-factors and policy changes. The data shows that wages have generally risen in line with economic growth, but certain periods of recession or policy shifts have impacted the rate of increase.
-Understanding these trends can provide insights into the broader economic landscape and the impact of government interventions on wage levels."""
+# Load the data
+uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
 
-response_message_Task2 = """Secondly, a significant issue highlighted in the data is the gender wage difference, showcasing the persistent gap in pay equity between men and women across various sectors.
-Despite efforts to address this issue, the data reveals that women continue to earn less than their male counterparts, indicating a systemic problem that requires further attention. By delving into the
-specifics of these disparities, it becomes clear that gender inequality remains a pressing concern in the Canadian labor market."""
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file, sep='\t')
 
-response_message_Task3 = """Lastly, an exploration of employment types uncovers disparities in earnings, particularly in how financial stability affects hourly rates. The data suggests that certain
-employment types, such as part-time or contract work, often result in lower wages compared to full-time positions. This disparity highlights the importance of financial security in determining wage levels,
-with implications for workers' overall well-being and quality of life. By examining these employment-related factors, a deeper understanding of the complexities of wage disparities in Canada can be gained,
-shedding light on the challenges faced by different segments of the workforce"""
+    # Filter the DataFrame for the selected occupations
+    selected_occupations = df[df['National Occupational Classification (NOC)'].isin([
+        'Professional occupations in engineering [213]', 
+        'Professional occupations in health [31]', 
+        'Total employees, all occupations [00-95]'
+    ])]
 
-st.title("Data Journalism: Canadian Wage Analysis")
+    # Create the line plot
+    plt.figure(figsize=(10, 6))
+    for occupation in selected_occupations['National Occupational Classification (NOC)'].unique():
+        subset = selected_occupations[selected_occupations['National Occupational Classification (NOC)'] == occupation]
+        plt.plot(subset['REF_DATE'], subset['VALUE'], label=occupation)
 
-st.header("Introduction")
-st.write("In this report, we analyze the Canadian wage data with a focus on three key aspects.")
+    plt.xlabel('Year')
+    plt.ylabel('Average Hourly Wage (CAD)')
+    plt.title('Hourly Wage Trends Over Time by Occupation')
+    plt.legend(title='Occupation')
+    plt.grid(True)
+    
+    # Display the plot in Streamlit
+    st.pyplot(plt)
 
-st.header("Analysis")
-st.write(response_message_Task1)
-
-st.image(hourly_wage_trends)
-
-st.write(response_message_Task2)
-
-st.image(comparison_of_weekly_wages)
-
-st.write(response_message_Task3)
-
-st.image(top_5_occupations)
-
-st.image(top3)
-
-st.image(bottom3)
+    # Text analysis section for AI-generated insights (example text provided)
+    response_message = """
+    By analyzing the trends over time, it becomes evident that while the overall wage growth has been steady, certain sectors such as engineering and health professionals have shown a marked increase, reflecting the rising demand and value of these professions in the Canadian economy.
+    """
+    
+    st.write("### Insights from the Data")
+    st.write(response_message)
