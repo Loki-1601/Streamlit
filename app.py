@@ -1,14 +1,14 @@
 # Cell 1: Setup
 import streamlit as st
 from openai import OpenAI
-
+import os
 
 # Load the images
-hourly_wage_trends = st.image('/Users/lokeshwaripotluri/Desktop/Task1.png')
-comparison_of_weekly_wages = st.image('/Users/lokeshwaripotluri/Desktop/Task2.png')
-top_5_occupations = st.image('/Users/lokeshwaripotluri/Desktop/Task3.1.png')
-top3 = st.image('/Users/lokeshwaripotluri/Desktop/Task3.2.png')
-bottom3 = st.image('/Users/lokeshwaripotluri/Desktop/Task3.3.png')
+hourly_wage_trends = Image.open('Task1.png')
+comparison_of_weekly_wages = Image.open('Task2.png')
+top_5_occupations = Image.open('Task3.1.png')
+top3 = Image.open('Task3.2.png')
+bottom3 = Image.open('Task3.3.png')
 
 #AI responses
 response_message_Task1 = """In analyzing Canadian wage data, several key aspects emerge. Firstly, when examining overall wage trends over time, it is evident that there has been a gradual increase in wages, albeit with fluctuations influenced by economic
