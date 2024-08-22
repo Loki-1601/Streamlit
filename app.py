@@ -4,11 +4,11 @@ from openai import OpenAI
 import os
 
 # Load the images
-hourly_wage_trends = st.image('Task1.png')
-comparison_of_weekly_wages = st.image('Task2.png')
-top_5_occupations = st.image('Task3.1.png')
-top3 = st.image('Task3.2.png')
-bottom3 = st.image('Task3.3.png')
+hourly_wage_trends = st.image("Task1.png")
+comparison_of_weekly_wages = st.image("Task2.png")
+top_5_occupations = st.image("Task3.1.png")
+top3 = st.image("Task3.2.png")
+bottom3 = st.image("Task3.3.png")
 
 #AI responses
 response_message_Task1 = """In analyzing Canadian wage data, several key aspects emerge. Firstly, when examining overall wage trends over time, it is evident that there has been a gradual increase in wages, albeit with fluctuations influenced by economic
