@@ -1,7 +1,7 @@
 # Cell 1: Setup
 import streamlit as st
 from openai import OpenAI
-import os
+
 
 # Load the images
 hourly_wage_trends = Image.open('/Users/lokeshwaripotluri/Desktop/Task1.png')
