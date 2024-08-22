@@ -3,62 +3,45 @@ import streamlit as st
 from openai import OpenAI
 import os
 
-# Get your OpenAI API key from environment variables 
-api_key = os.getenv("OPENAI_API_KEY")  # Used in production
-client = OpenAI(api_key=api_key)
+# Load the images
+hourly_wage_trends = Image.open('/Users/lokeshwaripotluri/Desktop/Task1.png')
+comparison_of_weekly_wages = Image.open('/Users/lokeshwaripotluri/Desktop/Task2.png')
+top_5_occupations = Image.open('/Users/lokeshwaripotluri/Desktop/Task3.1.png')
+top3 = Image.open('/Users/lokeshwaripotluri/Desktop/Task3.2.png')
+bottom3 = Image.open('/Users/lokeshwaripotluri/Desktop/Task3.3.png')
 
-# Cell 2: Title & Description
-st.title(' ❤️ Personalized Message Generator')
-st.markdown('Bzz Bzz...Hello there, allow me to help you craft a very special message for your loved one ❤️.')
+#AI responses
+response_message_Task1 = """In analyzing Canadian wage data, several key aspects emerge. Firstly, when examining overall wage trends over time, it is evident that there has been a gradual increase in wages, albeit with fluctuations influenced by economic
+factors and policy changes. The data shows that wages have generally risen in line with economic growth, but certain periods of recession or policy shifts have impacted the rate of increase.
+Understanding these trends can provide insights into the broader economic landscape and the impact of government interventions on wage levels."""
 
-# Cell 3: Function to generate text using OpenAI
-def analyze_text(text):
-    if not api_key:
-        st.error("OpenAI API key is not set. Please set it in your environment variables.")
-        return
-    
-    client = OpenAI(api_key=api_key)
-    model = "gpt-3.5-turbo"  # Using the GPT-3.5 model
+response_message_Task2 = """Secondly, a significant issue highlighted in the data is the gender wage difference, showcasing the persistent gap in pay equity between men and women across various sectors.
+Despite efforts to address this issue, the data reveals that women continue to earn less than their male counterparts, indicating a systemic problem that requires further attention. By delving into the
+specifics of these disparities, it becomes clear that gender inequality remains a pressing concern in the Canadian labor market."""
 
-    # Instructions for the AI (adjust if needed)
-    messages = [
-        {"role": "system", "content": " You are an assistant who helps craft a special message to a loved one."},
-        {"role": "user", "content": f" Please help me write a special message to a loved one based on the following:\n{text}"}
-    ]
+response_message_Task3 = """Lastly, an exploration of employment types uncovers disparities in earnings, particularly in how financial stability affects hourly rates. The data suggests that certain
+employment types, such as part-time or contract work, often result in lower wages compared to full-time positions. This disparity highlights the importance of financial security in determining wage levels,
+with implications for workers' overall well-being and quality of life. By examining these employment-related factors, a deeper understanding of the complexities of wage disparities in Canada can be gained,
+shedding light on the challenges faced by different segments of the workforce"""
 
-    response = client.chat.completions.create(
-        model=model,
-        messages=messages,
-        temperature=0  # Lower temperature for less random responses
-    )
-    return response.choices[0].message.content
+st.title("Data Journalism: Canadian Wage Analysis")
 
+st.header("Introduction")
+st.write("In this report, we analyze the Canadian wage data with a focus on three key aspects.")
 
-# Cell 4: Function to generate the image
-def generate_image(text):
-    if not api_key:
-        st.error("OpenAI API key is not set. Please set it in your environment variables.")
-        return
+st.header("Analysis")
+st.write(response_message_Task1)
 
-    response = client.images.generate(
-        model="dall-e-3",
-        prompt=text,
-        size="1024x1024",
-        quality="standard",
-        n=1,
-    )
+st.image(hourly_wage_trends)
 
-    # Assuming the API returns an image URL; adjust based on actual response structure
-    return response.data[0].url
+st.write(response_message_Task2)
 
-# Cell 5: Streamlit UI 
-user_input = st.text_area("Enter a brief for your post:", " Though the day was cold, the warmth of your heart made everything feel brighter and more comforting")
+st.image(comparison_of_weekly_wages)
 
-if st.button('Generate Post Content'):
-    with st.spinner('Generating Text...'):
-        post_text = analyze_text(user_input)
-        st.write(post_text)
+st.write(response_message_Task3)
 
-    with st.spinner('Generating Thumbnail...'):
-        thumbnail_url = generate_image(user_input)  # Consider adjusting the prompt for image generation if needed
-        st.image(thumbnail_url, caption='Generated Thumbnail')
+st.image(top_5_occupations)
+
+st.image(top3)
+
+st.image(bottom3)
