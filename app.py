@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from io import StringIO
 
 # Streamlit title and description
-st.title("Hourly Wage Trends in Canada Over Time by Occupation")
+#st.title("Hourly Wage Trends in Canada Over Time by Occupation")
 
 # Load the data
 uploaded_file = st.file_uploader("Choose a file")
