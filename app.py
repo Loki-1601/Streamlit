@@ -88,26 +88,27 @@ if full_time_file is not None and part_time_file is not None:
     # Create a bar chart to compare the average weekly wages
     fig, ax = plt.subplots(figsize=(10, 6))
     
-    x = wages['Type of work']
+    x = range(len(wages['Type of work']))
     width = 0.35
     
-    ax.bar(x, wages['Full-time'], width, label='Full-time', color='blue', alpha=0.6)
-    ax.bar(x, wages['Part-time'], width, label='Part-time', color='orange', alpha=0.6)
+    ax.bar([i - width/2 for i in x], wages['Full-time'], width, label='Full-time', color='blue', alpha=0.6)
+    ax.bar([i + width/2 for i in x], wages['Part-time'], width, label='Part-time', color='orange', alpha=0.6)
     
     ax.set_xlabel('Type of Work')
     ax.set_ylabel('Average Weekly Wage (CAD)')
     ax.set_title('Comparison of Average Weekly Wages: Full-time vs Part-time')
-    ax.legend()
+    ax.set_xticks(x)
+    ax.set_xticklabels(wages['Type of work'], rotation=45, ha='right')
     
-    # Rotate x-axis labels for better readability
-    plt.xticks(rotation=45, ha='right')
+    # Move legend to upper right corner
+    ax.legend(loc='upper right')
     
     # Adjust layout to prevent cutting off labels
     plt.tight_layout()
     
     # Display the plot in Streamlit
     st.pyplot(fig)
-    
+   
     # Display the data
     st.subheader("Wage Data")
     st.write(wages)
