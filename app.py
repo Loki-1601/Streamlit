@@ -55,10 +55,6 @@ if uploaded_file is not None:
     # Display the plot in Streamlit
     st.pyplot(fig)
     
-    # Display some statistics
-    st.subheader("Summary Statistics")
-    st.write(filtered_df.groupby('National Occupational Classification (NOC)')['VALUE'].describe())
-    
     # Allow users to view the raw data
     if st.checkbox("Show raw data"):
         st.write(filtered_df)
