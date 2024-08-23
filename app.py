@@ -124,34 +124,7 @@ if overall_file and fulltime_file and parttime_file:
     plt.tight_layout()
     st.pyplot(fig)
 
-    # Insights
-    st.header("5. Insights")
-    st.write("1. Hourly Wage Trends:")
-    st.write("   - The overall trend shows an increase in hourly wages across all selected occupations over time.")
-    st.write("   - Professional occupations in health and engineering consistently show higher wages compared to the overall average.")
     
-    st.write("\n2. Full-time vs Part-time Comparison:")
-    st.write(f"   - On average, full-time employees earn ${wages['Full-time'].mean() - wages['Part-time'].mean():.2f} more per week than part-time employees.")
-    
-    st.write("\n3. Top 5 Occupations by Average Hourly Wage:")
-    for i, occupation in enumerate(top_5_occupations, 1):
-        st.write(f"   {i}. {occupation}")
-    
-    st.write("\n4. Gender Wage Gap in Top Occupations:")
-    for occupation in top_5_occupations:
-        male_wage = heatmap_data.loc[occupation, 'Male']
-        female_wage = heatmap_data.loc[occupation, 'Female']
-        gap = male_wage - female_wage
-        gap_percentage = (gap / male_wage) * 100
-        st.write(f"   - In {occupation}, the gender wage gap is ${gap:.2f} (Male wages are {gap_percentage:.2f}% higher than female wages)")
-    
-    st.write("\n5. Wage Distribution Observations:")
-    st.write("   - The wage gap seems to be more pronounced in higher-paying occupations.")
-    st.write("   - There's generally more variability in wages for top occupations compared to bottom occupations.")
-    
-    st.write("\n6. Bottom 3 Occupations:")
-    for i, occupation in enumerate(bottom_3_occupations, 1):
-        st.write(f"   {i}. {occupation}")
 
 else:
     st.write("Please upload all three CSV files to begin the analysis.")
